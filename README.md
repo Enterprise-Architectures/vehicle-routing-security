@@ -128,3 +128,16 @@ JWT signature, issuer, and expiry are verified on every protected request.
 No refresh-token rotation, token revocation, OIDC/Keycloak integration,
 login rate-limiting, audit alerting, or password reset. Use HTTPS and strong
 secrets in any real deployment.
+
+### Optional PostgreSQL integration tests
+
+```powershell
+Set-Item Env:RUN_PG_INTEGRATION_TESTS true
+Set-Item Env:SPRING_PROFILES_ACTIVE dev
+mvn "-Dtest=PostgresRepositoryIntegrationTest" test
+Remove-Item Env:RUN_PG_INTEGRATION_TESTS
+Remove-Item Env:SPRING_PROFILES_ACTIVE
+```
+
+These two tests exercise repository queries against the dedicated PostgreSQL
+database, not an in-memory replacement. They passed with PostgreSQL 17.
